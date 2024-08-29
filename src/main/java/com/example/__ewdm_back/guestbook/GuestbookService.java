@@ -2,18 +2,14 @@ package com.example.__ewdm_back.guestbook;
 
 import com.example.__ewdm_back.guestbook.dto.GuestBookListResponse;
 import com.example.__ewdm_back.guestbook.dto.GuestBookPostRequest;
-import com.example.__ewdm_back.guestbook.dto.GuestBookPutRequest;
 import com.example.__ewdm_back.guestbook.dto.GuestbookResponse;
 import com.example.__ewdm_back.image.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 @Service
 public class GuestbookService {
@@ -64,24 +60,5 @@ public class GuestbookService {
         );
         Guestbook saved = guestbookRepository.save(guestbook);
         return saved;
-    }
-
-    public Guestbook updateGuestbook(Integer postId, GuestBookPutRequest guestBookPutRequest) {
-        Guestbook guestbook = guestbookRepository.findById(postId).orElse(null);
-        if (guestbook==null) return null;
-        guestbook.setTitle(guestBookPutRequest.getTitle());
-        guestbook.setBody(guestbook.getBody());
-        guestbook.setNickname(guestbook.getNickname());
-        guestbook.setPassword(guestbook.getPassword());
-        Guestbook updated = guestbookRepository.save(guestbook);
-        return updated;
-    }
-
-    public Guestbook deleteGuestbook(Integer postId) {
-        Guestbook deleted = guestbookRepository.findById(postId).orElse(null);
-        if (deleted == null) return null;
-        imageRepository.deleteByGuestbookId(postId);
-        guestbookRepository.deleteById(postId);
-        return deleted;
     }
 }

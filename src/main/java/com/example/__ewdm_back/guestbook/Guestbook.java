@@ -26,8 +26,5 @@ public class Guestbook {
     private String nickname;
 
     @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
     private String createdAt;
 }
