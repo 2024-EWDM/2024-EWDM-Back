@@ -3,7 +3,6 @@ package com.example.__ewdm_back.guestbook;
 import com.example.__ewdm_back.guestbook.dto.GuestBookListResponse;
 import com.example.__ewdm_back.guestbook.dto.GuestBookPostRequest;
 import com.example.__ewdm_back.guestbook.dto.GuestbookResponse;
-import com.example.__ewdm_back.image.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 public class GuestbookService {
     @Autowired
     GuestbookRepository guestbookRepository;
-    @Autowired
-    ImageRepository imageRepository;
 
     public ArrayList<GuestBookListResponse> getGuestbookList() {
         ArrayList<GuestBookListResponse> guestBookListResponses = new ArrayList<>();
@@ -25,10 +22,7 @@ public class GuestbookService {
             guestBookListResponses.add(new GuestBookListResponse(
                     guestbook.getPostId(),
                     guestbook.getNickname(),
-                    guestbook.getTitle(),
-                    guestbook.getBody(),
-                    (ArrayList<String>) imageRepository.findLinksByGuestbook(guestbook.getPostId()),
-                    guestbook.getCreatedAt()
+                    guestbook.getTitle()
             ));
         return guestBookListResponses;
     }
@@ -40,23 +34,17 @@ public class GuestbookService {
                 guestbook.getPostId(),
                 guestbook.getNickname(),
                 guestbook.getTitle(),
-                guestbook.getBody(),
-                (ArrayList<String>) imageRepository.findLinksByGuestbook(guestbook.getPostId()),
-                guestbook.getCreatedAt()
+                guestbook.getBody()
         );
         return guestbookResponse;
     }
 
     public Guestbook postGuestbook(GuestBookPostRequest guestBookPostRequest) {
-        LocalDateTime localTime = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
         Guestbook guestbook = new Guestbook(
                 null,
                 guestBookPostRequest.getTitle(),
                 guestBookPostRequest.getBody(),
-                guestBookPostRequest.getNickname(),
-                guestBookPostRequest.getPassword(),
-                dateTimeFormatter.format(localTime)
+                guestBookPostRequest.getNickname()
         );
         Guestbook saved = guestbookRepository.save(guestbook);
         return saved;
