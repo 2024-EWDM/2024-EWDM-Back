@@ -16,6 +16,4 @@ public class GuestbookResponse {
     private String nickname;
     private String title;
     private String body;
-    private ArrayList<String> imageLinks;
-    private String createdAt;
 }
